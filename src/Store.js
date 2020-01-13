@@ -5,13 +5,20 @@ export const UserContext = React.createContext()
 
 const Store = ({ children }) => {
   const [user, setUser] = useState(null)
+  console.log("currentuser", user)
 
   useEffect(() => {
     app.auth().onAuthStateChanged(setUser)
   }, [])
 
   return (
-    <UserContext.Provider value={{ user }}>{children}</UserContext.Provider>
+    <UserContext.Provider
+      value={{
+        user
+      }}
+    >
+      {children}
+    </UserContext.Provider>
   )
 }
 
