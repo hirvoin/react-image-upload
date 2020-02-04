@@ -1,15 +1,15 @@
 import React, { useContext, useState } from "react"
 import app from "../firebase"
 import { UserContext } from "../Store"
-import { withRouter, Redirect } from "react-router"
+import { withRouter, Redirect } from "react-router-dom"
 
 const Login = () => {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const [email, setEmail] = useState<string>("")
+  const [password, setPassword] = useState<string>("")
 
-  const { user } = useContext(UserContext)
+  const { currentUser } = useContext(UserContext)
 
-  const handleLogin = async event => {
+  const handleLogin = async (event: any) => {
     event.preventDefault()
     try {
       console.log("logging in with credentials", email, password)
@@ -19,7 +19,7 @@ const Login = () => {
     }
   }
 
-  const handleLogout = async event => {
+  const handleLogout = async (event: any) => {
     event.preventDefault()
     try {
       await app.auth().signOut()
@@ -28,15 +28,14 @@ const Login = () => {
     }
   }
 
-  if (user) {
-    return <button onClick={handleLogout}>Log Out</button>
+  if (currentUser) {
+    return <button onClick={() => handleLogout}>Log Out</button>
   }
 
   return (
     <div>
       <h2>Log In</h2>
-      <button onClick={handleLogout}>Log Out</button>
-      <form onSubmit={handleLogin}>
+      <form onSubmit={event => handleLogin(event)}>
         <label>
           Email
           <input
@@ -57,6 +56,7 @@ const Login = () => {
         </label>
         <button type="submit">Log in</button>
       </form>
+      <button onClick={handleLogout}>Log Out</button>
     </div>
   )
 }

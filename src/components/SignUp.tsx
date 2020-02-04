@@ -5,7 +5,7 @@ export const SignUp = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
-  const handleSignUp = async event => {
+  const handleSignUp = async (event: any) => {
     event.preventDefault()
     try {
       await app.auth().createUserWithEmailAndPassword(email, password)
